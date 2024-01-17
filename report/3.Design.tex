@@ -1,0 +1,47 @@
+%%%%%%%%%%%% DISEÑO Y DESARROLLO / DESIGN & IMPLEMENTATION CHAPTER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Design and development}
+\label{cha:design-development}
+
+\section{Introduction}
+\redtext{Concise introduction outlining approach, and purpose of modifying the activation function in the feedforward network and the expected impact of this modification.}
+
+\redtext{Brief description of each subsection.}
+
+\section{Network architectures}
+\redtext{Reference fully detailed base networks' architectures on an appendix.}
+
+\redtext{Explain why share the activation subnetwork among all the neurons (same as usual with ReLU, \& lower complexity)(comment on potential of per-layer activations).}
+
+\redtext{Explain activation subnetwork architecture. Including explanation of choice of base activation function (ReLU). Explain how in this setup the activation subnetwork is basically a piece-wise linear function. Comment on alternatives.}
+
+% - In total, ? network architectures were tested for the classification problem of images (MNIST, FashionMNIST, CIFAR10). The detailed architectures can be found in Appendix A
+
+The ususal ReLU activation from the base models was replaced by a custom activation with learnable parameters. This new activation is shared among all the layers in the base model in the same way as a simple ReLU would. This means that there is only one set of parameters needed to define the activation function, and it is the same no matter where it is called from within the network. In this way, the complexity introduced by the new learnable parameters is kept to a minimum, and compared to the amount of trainable weights, it is usually negligible.
+
+% - Having a shared activation function is not a must, and one could easily conceive a per-layer activation function (with different parameters for each layer). The complexity introduced in this way would be proportional to the depth of the network, but still, in most cases, it should be quite small compared to the amount of trainable weights. 
+
+In order to potentially model any arbitrary activation function, a simple fully connected network was used, which we will refer to as (activation) subnetwork hereafter. The only requirement for a neural network to describe a function is that its input and output must be one-dimensional. Apart from that, there is complete freedom to define the architecture as one would please. For our purposes, we chose a network with a single hidden layer, and a ReLU activation. This architecture has the advantage of having a straightforward interpretation: it is a piece-wise linear function with as many pieces as the dimension of the hidden layer.
+
+\redtext{Mathematical description}
+
+% - Of course one is not limited by this type of architecture, one could add more hidden layers, or use different activation functions (in the activation subnetwork). This might change the space of functions that the subnetwork can learn in interesting ways, such as being more appropriate for certain kinds of problems, or converging differently into a potentially better family of functions. However the study of such varied ???, although interesting, is out of the scope of this work.
+
+\section{Training process}
+\redtext{Updating of parameters. Validation, loss function, etc.}
+
+\section{Experimental setup}
+\redtext{Actual experiments done. Description of datasets. Architectures tested. Multiple runs, to extract statistics.}
+
+% - The implementation was done using PyTorch
+
+The datasets used were:
+\begin{itemize}
+    \item MNIST
+    \item FashionMNIST
+    \item CIFAR10
+\end{itemize}
+
+\redtext{This architercture on that dataset, etc.}
+
+% - For our experiments we initialize the weights of the base network and the activation subnetwork randomly (specifically using ??? initialization, which is the default on pytorch), and train the whole model on the training subsets of MNIST, FashionMNIST or CIFAR10. After that the evaluation of the trained model is done on the test subsets of said datasets.
+% - We run the same training process several times with different random weight initializations, to obtain a statistically significant approximation of the expected accuracy and loss.
