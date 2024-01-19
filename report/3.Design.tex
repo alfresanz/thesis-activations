@@ -7,7 +7,8 @@
 
 \redtext{Brief description of each subsection.}
 
-\section{Network architectures}
+
+\section{Self-learnable activation functions}
 \redtext{Reference fully detailed base networks' architectures on an appendix.}
 
 \redtext{Explain why share the activation subnetwork among all the neurons (same as usual with ReLU, \& lower complexity)(comment on potential of per-layer activations).}
@@ -26,22 +27,41 @@ In order to potentially model any arbitrary activation function, a simple fully 
 
 % - Of course one is not limited by this type of architecture, one could add more hidden layers, or use different activation functions (in the activation subnetwork). This might change the space of functions that the subnetwork can learn in interesting ways, such as being more appropriate for certain kinds of problems, or converging differently into a potentially better family of functions. However the study of such varied ???, although interesting, is out of the scope of this work.
 
-\section{Training process}
-\redtext{Updating of parameters. Validation, loss function, etc.}
 
 \section{Experimental setup}
 \redtext{Actual experiments done. Description of datasets. Architectures tested. Multiple runs, to extract statistics.}
 
 % - The implementation was done using PyTorch
 
-The datasets used were:
+Three widely recognized image classification datasets were utilized to study the performance of the custom learnable activation functions: MNIST, FashionMNIST, and CIFAR-10. Each dataset presents its unique challenges and characteristics, making them suitable for evaluating the performance of different neural network models.
+
 \begin{itemize}
-    \item MNIST
-    \item FashionMNIST
-    \item CIFAR10
+
+\item MNIST Dataset: The MNIST dataset is a collection of handwritten digits (0 through 9), comprising 60,000 training images and 10,000 testing images. Each image is a grayscale representation, sized at 28x28 pixels. The dataset is widely used for benchmarking image processing systems and is considered a fundamental dataset for evaluating machine learning algorithms, particularly in the field of image recognition.
+
+\item FashionMNIST Dataset: FashionMNIST serves as a more contemporary and challenging alternative to the traditional MNIST dataset. It consists of 60,000 training images and 10,000 test images, each of which is 28x28 pixels. The dataset features 10 classes of clothing items, making it more complex than MNIST but still accessible for benchmarking machine learning algorithms.
+
+\item CIFAR-10 Dataset: The CIFAR-10 dataset contains 60,000 32x32 color images in 10 different classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. The dataset is widely used for machine learning and computer vision research and poses a more challenging problem than MNIST or FashionMNIST due to the complexity of the images and the presence of color.
+
 \end{itemize}
 
-\redtext{This architercture on that dataset, etc.}
+All three datasets are intended for image classification, with 10 distinct classes. Consequently, the loss function employed in the networks studied was a cross-entropy loss, applied to their output, which is a 10-dimensional logits vector corresponding to the 10 classes in each dataset.
+
+In terms of the models trained:
+
+\begin{itemize}
+
+\item Fully Connected Model: This model was trained on both the MNIST and FashionMNIST datasets. Given the relatively simpler nature of these datasets, a fully connected neural network architecture was deemed appropriate.
+
+\item Simple CNN: A CNN was employed for the FashionMNIST and CIFAR-10 datasets. The choice of a convolutional network is suitable for these datasets due to the spatial nature of image data.
+
+\item More Complex CNN for CIFAR-10: Given the increased complexity of the CIFAR-10 dataset, a more sophisticated CNN architecture was specifically designed and trained for this dataset. This reflects the need for more advanced feature extraction capabilities to effectively handle the more challenging image classification tasks presented by CIFAR-10.
+
+\end{itemize}
+
+This experimental setup, with its varied models and datasets, allows for a comprehensive evaluation of the neural network architectures under different levels of problem complexity, providing valuable insights into the effectiveness and adaptability of the networks to different image classification tasks.
+
+The fully detailed description of the architectures used can be found in \bluetext{appendix A}.
 
 % - For our experiments we initialize the weights of the base network and the activation subnetwork randomly (specifically using ??? initialization, which is the default on pytorch), and train the whole model on the training subsets of MNIST, FashionMNIST or CIFAR10. After that the evaluation of the trained model is done on the test subsets of said datasets.
 % - We run the same training process several times with different random weight initializations, to obtain a statistically significant approximation of the expected accuracy and loss.
